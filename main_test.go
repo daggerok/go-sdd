@@ -6,6 +6,8 @@ import (
 	"testing"
 
 	"go-sdd/handlers"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestHomeHandler(t *testing.T) {
@@ -13,10 +15,6 @@ func TestHomeHandler(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 	handlers.HomeHandler(w, req)
 
-	if w.Code != http.StatusOK {
-		t.Errorf("Expected status 200, got %d", w.Code)
-	}
-	if w.Header().Get("Content-Type") != "text/html" {
-		t.Errorf("Expected text/html")
-	}
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, "text/html", w.Header().Get("Content-Type"))
 }
