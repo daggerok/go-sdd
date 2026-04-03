@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"go-sdd/handlers"
+	"github.com/daggerok/go-sdd/handlers"
 )
 
 func main() {

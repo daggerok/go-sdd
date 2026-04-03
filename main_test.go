@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"go-sdd/handlers"
+	"github.com/daggerok/go-sdd/handlers"
 
 	"github.com/stretchr/testify/assert"
 )
