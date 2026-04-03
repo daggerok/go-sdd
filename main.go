@@ -9,9 +9,13 @@ import (
 
 func main() {
 	http.HandleFunc("/", handlers.HomeHandler)
-	fmt.Println("Server running on port 8081")
-	fmt.Println("Visit http://localhost:8081 to see the home page")
-	if err := http.ListenAndServe(":8081", nil); err != nil {
+
+	port := 8081
+	fmt.Println("Server running on port", port)
+	fmt.Printf("Visit http://localhost:%d to see the home page\n", port)
+
+	listen := fmt.Sprintf(":%d", port)
+	if err := http.ListenAndServe(listen, nil); err != nil {
 		fmt.Println("Server failed to start:", err)
 	}
 }
