@@ -9,6 +9,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", handlers.HomeHandler)
+	http.HandleFunc("/signup", handlers.SignupHandler)
 
 	port := 8081
 	fmt.Println("Server running on port", port)
