@@ -1,7 +1,7 @@
 //go:build e2e
 // +build e2e
 
-package main
+package main_e2e_test
 
 import (
 	"bytes"
@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/daggerok/go-sdd/server"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +20,7 @@ func TestE2EServer(t *testing.T) {
 	listener, err := net.Listen("tcp", "127.0.0.1:0")
 	assert.NoError(t, err)
 
-	srv := newServer(listener.Addr().String())
+	srv := server.NewServer(listener.Addr().String())
 	go func() {
 		_ = srv.Serve(listener)
 	}()
