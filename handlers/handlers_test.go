@@ -36,9 +36,12 @@ func TestSignupHandler(t *testing.T) {
 		req.Header.Set("Content-Type", "application/json")
 
 		w := httptest.NewRecorder()
-		handlers.SignupHandler(w, req)
-		assert.Equal(t, http.StatusCreated, w.Code)
 
+		// When: Posting signup request
+		handlers.SignupHandler(w, req)
+
+		// Then: Should create user
+		assert.Equal(t, http.StatusCreated, w.Code)
 		var response map[string]string
 		json.Unmarshal(w.Body.Bytes(), &response)
 		assert.Equal(t, "User created", response["message"])
@@ -52,9 +55,12 @@ func TestSignupHandler(t *testing.T) {
 		req.Header.Set("Content-Type", "application/json")
 
 		w := httptest.NewRecorder()
-		handlers.SignupHandler(w, req)
-		assert.Equal(t, http.StatusBadRequest, w.Code)
 
+		// When: Posting signup request
+		handlers.SignupHandler(w, req)
+
+		// Then: Should return bad request
+		assert.Equal(t, http.StatusBadRequest, w.Code)
 		var response map[string]string
 		json.Unmarshal(w.Body.Bytes(), &response)
 		assert.Contains(t, response["error"], "Password")
