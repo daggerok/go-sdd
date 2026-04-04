@@ -1,17 +1,18 @@
 package main_test
 
 import (
+	"fmt"
+	"os"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 // E2E or integration tests for the main app can go here
 // For example, testing server startup or full flows
 
-func TestMainApp(t *testing.T) {
-	t.Run("should have main function", func(t *testing.T) {
-		// Placeholder: In real e2e, test server startup or API calls
-		assert.True(t, true, "Main app exists")
-	})
+func TestMain(m *testing.M) {
+	exitCode := m.Run()
+	if exitCode != 0 {
+		fmt.Println("Tests failed with exit code:", exitCode)
+	}
+	os.Exit(exitCode)
 }

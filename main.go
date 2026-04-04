@@ -7,16 +7,25 @@ import (
 	"github.com/daggerok/go-sdd/handlers"
 )
 
-func main() {
-	http.HandleFunc("/", handlers.HomeHandler)
-	http.HandleFunc("/signup", handlers.SignupHandler)
+func newServer(addr string) *http.Server {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", handlers.HomeHandler)
+	mux.HandleFunc("/signup", handlers.SignupHandler)
 
+	return &http.Server{
+		Addr:    addr,
+		Handler: mux,
+	}
+}
+
+func main() {
 	port := 8081
+	srv := newServer(fmt.Sprintf(":%d", port))
+
 	fmt.Println("Server running on port", port)
 	fmt.Printf("Visit http://localhost:%d to see the home page\n", port)
 
-	listen := fmt.Sprintf(":%d", port)
-	if err := http.ListenAndServe(listen, nil); err != nil {
+	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		fmt.Println("Server failed to start:", err)
 	}
 }
