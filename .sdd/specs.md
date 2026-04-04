@@ -1,5 +1,8 @@
 # Specifications for go-sdd Application
 
+## Project Environment
+- **Go Version**: 1.26.1
+
 ## Implemented Features
 
 ### Signup

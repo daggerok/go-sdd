@@ -37,7 +37,7 @@ This file contains instructions and best practices for GitHub Copilot to follow 
 ## SDD (Specification Driven Development) Workflow
 
 To ensure high-quality, requirement-driven development:
-1. **Define Specs**: Write or update `.copilot/specs.md` with user stories, acceptance criteria, and API details. Commit specs first.
+1. **Define Specs**: Write or update `.sdd/specs.md` with user stories, acceptance criteria, and API details. Commit specs first.
 2. **Create Feature Branch**: Use `git checkout -b feature/<feature-name>` for each new feature.
 3. **Write Tests (TDD)**: Add failing tests in `*_test.go` based on specs. Run `go test` to confirm they fail.
 4. **Implement Code**: Write minimal code in `handlers/handlers.go` to pass tests. Follow guidelines.
@@ -46,9 +46,18 @@ To ensure high-quality, requirement-driven development:
 7. **Merge**: Commit changes, merge to main via PR (if applicable), and delete branch.
 8. **Iterate**: Based on feedback, update specs and repeat.
 
-- Always reference `.copilot/specs.md` for requirements.
+- Always reference `.sdd/specs.md` for requirements.
 - If user specifies a different approach, adapt accordingly.
 - Use learning points in responses to teach SDD concepts.
+
+## Git Workflow
+
+When committing and pushing changes, always use the following approach:
+1. `git add .`
+2. `git commit -m "proper descriptive message"`
+3. `git fetch -pat`
+4. `git rebase origin/$(git branch --show-current)`
+5. `git push origin $(git branch --show-current)`
 
 ## Future Enhancements
 
