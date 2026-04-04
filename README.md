@@ -1,14 +1,11 @@
 # go-sdd
-Todo web app by specification driven development with vs code and copilot. A simple web application for managing todos
-with basic CRUD operations.
+
+Todo web app by specification driven development with VS Code and Copilot. A simple web application for managing todos with authentication.
 
 ## Features
 
-- **Create Todos**: POST to `/api/todos`
-- **Get All Todos**: GET to `/api/todos`
-- **Get Todo Detail**: GET to `/api/todos/:id`
-- **Update Todo**: PUT to `/api/todos/:id`
-- **Delete Todo**: DELETE to `/api/todos/:id`
+- **Signup**: POST to `/signup` - Create a new user account
+- **Home Page**: GET to `/` - Welcome page with app info
 
 ## Setup
 
@@ -22,32 +19,59 @@ go mod download
 go run main.go
 ```
 
-The application will create a SQLite database file (todos.db) automatically.
+The application runs on port 8081 and stores users in memory.
 
 ## Testing
 
-Run all tests:
+Run unit tests:
 ```bash
-./run_tests.sh
+go test ./...
 ```
 
-Or manually:
+Run end-to-end tests:
 ```bash
-go test -v
-go test -cover
+go test -tags=e2e
+```
+
+Run all tests with coverage:
+```bash
+go test -cover ./...
+go test -tags=e2e -cover
 ```
 
 ## API Endpoints
 
-### Get All Todos
+### Home Page
 ```bash
-curl http://localhost:8080/api/todos
+curl http://localhost:8081/
+```
+Returns HTML welcome page.
+
+### Signup
+```bash
+curl -X POST http://localhost:8081/signup \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com", "password": "password123"}'
 ```
 
-### Create Todo
-```bash
-curl -X POST http://localhost:8080/api/todos \
-  -H "Content-Type: application/json" \
+Success response:
+```json
+{"message": "User created"}
+```
+
+Error responses:
+- Invalid JSON: `{"error": "Invalid JSON"}`
+- Missing fields: `{"error": "Email and password required"}`
+- Short password: `{"error": "Password must be at least 6 characters"}`
+- Email exists: `{"error": "Email already exists"}`
+
+## Project Structure
+
+- `main.go`: Application entry point
+- `server/`: HTTP server setup
+- `handlers/`: HTTP request handlers
+- `main_e2e_test.go`: End-to-end tests
+- `.copilot/`: Specifications and guidelines for development
   -d '{"user_id": 1, "title": "My first todo", "completed": false}'
 ```
 

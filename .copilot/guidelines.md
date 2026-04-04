@@ -25,7 +25,7 @@ This file contains instructions and best practices for GitHub Copilot to follow 
 
 ## Application Requirements
 
-- Simple HTTP server serving a welcome page on "/".
+- Simple HTTP server serving a welcome page on "/" and signup endpoint on "/signup".
 - Use `net/http` for routing and serving.
 - Handle errors gracefully without crashing the application.
 - Tests should cover basic functionality, including status codes and headers.
@@ -36,7 +36,7 @@ To ensure high-quality, requirement-driven development:
 1. **Define Specs**: Write or update `.copilot/specs.md` with user stories, acceptance criteria, and API details. Commit specs first.
 2. **Create Feature Branch**: Use `git checkout -b feature/<feature-name>` for each new feature.
 3. **Write Tests (TDD)**: Add failing tests in `*_test.go` based on specs. Run `go test` to confirm they fail.
-4. **Implement Code**: Write minimal code in handlers/main.go to pass tests. Follow guidelines.
+4. **Implement Code**: Write minimal code in `handlers/handlers.go` to pass tests. Follow guidelines.
 5. **Refactor**: Improve code while keeping tests green. Run `go test` and `go vet`.
 6. **Validate**: Ensure specs are met, update docs if needed.
 7. **Merge**: Commit changes, merge to main via PR (if applicable), and delete branch.
