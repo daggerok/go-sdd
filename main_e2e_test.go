@@ -1,7 +1,7 @@
 //go:build e2e
 // +build e2e
 
-package main_e2e_test
+package main
 
 import (
 	"bytes"

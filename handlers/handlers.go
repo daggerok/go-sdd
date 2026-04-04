@@ -1,4 +1,4 @@
-package server
+package handlers
 
 import (
 	"encoding/json"
@@ -15,17 +15,6 @@ var (
 func init() {
 	// Pre-registered user
 	users["test@go-sdd.example.com"] = "password123"
-}
-
-func NewServer(addr string) *http.Server {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", HomeHandler)
-	mux.HandleFunc("/signup", SignupHandler)
-
-	return &http.Server{
-		Addr:    addr,
-		Handler: mux,
-	}
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {

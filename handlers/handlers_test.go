@@ -1,4 +1,4 @@
-package server_test
+package handlers_test
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/daggerok/go-sdd/server"
+	"github.com/daggerok/go-sdd/handlers"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -19,7 +19,7 @@ func TestHomeHandler(t *testing.T) {
 		w := httptest.NewRecorder()
 
 		// When: Handling the request
-		server.HomeHandler(w, req)
+		handlers.HomeHandler(w, req)
 
 		// Then: Should return OK with HTML content
 		assert.Equal(t, http.StatusOK, w.Code)
@@ -38,7 +38,7 @@ func TestSignupHandler(t *testing.T) {
 		w := httptest.NewRecorder()
 
 		// When: Posting signup request
-		server.SignupHandler(w, req)
+		handlers.SignupHandler(w, req)
 
 		// Then: Should create user
 		assert.Equal(t, http.StatusCreated, w.Code)
@@ -59,7 +59,7 @@ func TestSignupHandler(t *testing.T) {
 		w := httptest.NewRecorder()
 
 		// When: Posting signup request
-		server.SignupHandler(w, req)
+		handlers.SignupHandler(w, req)
 
 		// Then: Should return bad request
 		assert.Equal(t, http.StatusBadRequest, w.Code)
