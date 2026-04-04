@@ -30,13 +30,13 @@ go test ./...
 
 Run end-to-end tests:
 ```bash
-go test -tags=e2e
+go test -tags=e2e ./...
 ```
 
 Run all tests with coverage:
 ```bash
 go test -cover ./...
-go test -tags=e2e -cover
+go test -tags=e2e -cover ./...
 ```
 
 ## API Endpoints
@@ -67,11 +67,17 @@ Error responses:
 
 ## Project Structure
 
+- `.sdd/`: Specifications and guidelines for development
 - `main.go`: Application entry point
 - `server/`: HTTP server setup
 - `handlers/`: HTTP request handlers
-- `main_e2e_test.go`: End-to-end tests
-- `.copilot/`: Specifications and guidelines for development
+- `*_e2e_test.go`: End-to-end tests
+- `*_test.go`: Unit tests
+
+<!--
+
+```bash
+curl -XPOST http://localhost:8080/api/todos/
   -d '{"user_id": 1, "title": "My first todo", "completed": false}'
 ```
 
@@ -91,6 +97,8 @@ curl -X PUT http://localhost:8080/api/todos/1 \
 ```bash
 curl -X DELETE http://localhost:8080/api/todos/1
 ```
+
+-->
 
 ## Future Features
 
