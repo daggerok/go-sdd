@@ -25,7 +25,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		fmt.Fprintf(w, `{"error": "Method not allowed"}`)
 		return
 	}
 
@@ -34,24 +36,32 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, `{"error": "Invalid JSON"}`, http.StatusBadRequest)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, `{"error": "Invalid JSON"}`)
 		return
 	}
 
 	if req.Email == "" || req.Password == "" {
-		http.Error(w, `{"error": "Email and password required"}`, http.StatusBadRequest)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, `{"error": "Email and password required"}`)
 		return
 	}
 
 	if len(req.Password) < 6 {
-		http.Error(w, `{"error": "Password must be at least 6 characters"}`, http.StatusBadRequest)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, `{"error": "Password must be at least 6 characters"}`)
 		return
 	}
 
 	mu.Lock()
 	if _, exists := users[req.Email]; exists {
 		mu.Unlock()
-		http.Error(w, `{"error": "Email already exists"}`, http.StatusBadRequest)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, `{"error": "Email already exists"}`)
 		return
 	}
 	users[req.Email] = req.Password
