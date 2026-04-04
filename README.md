@@ -1,6 +1,6 @@
-# Todo Web App
-
-A simple web application for managing todos with basic CRUD operations.
+# go-sdd
+Todo web app by specification driven development with vs code and copilot. A simple web application for managing todos
+with basic CRUD operations.
 
 ## Features
 
