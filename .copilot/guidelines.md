@@ -17,11 +17,15 @@ This file contains instructions and best practices for GitHub Copilot to follow 
 
 ## Project Structure
 
-- `server/`: Contains HTTP server setup and routing.
-- `handlers/`: Contains HTTP handlers and related logic.
 - `main.go`: Entry point, sets up routes and starts the server.
+- `server/`: Contains HTTP server setup and routing (package `server`).
+- `handlers/`: Contains HTTP request handlers and business logic (package `handlers`).
 - `main_e2e_test.go`: End-to-end tests that run against the running app.
 - `.copilot/guidelines.md`: This file with coding guidelines.
+
+**Important**: Never put handlers and server setup in the same file/package. Keep them separated:
+- Server package: Only routing and server configuration
+- Handlers package: Only request handling logic
 
 ## Application Requirements
 
