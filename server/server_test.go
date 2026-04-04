@@ -1,6 +1,3 @@
-//go:build e2e
-// +build e2e
-
 package server_test
 
 import (
@@ -34,7 +31,10 @@ func TestE2EServer(t *testing.T) {
 	baseURL := "http://" + listener.Addr().String()
 
 	t.Run("should show home page", func(t *testing.T) {
+		// When: Getting home page
 		resp, err := http.Get(baseURL + "/")
+
+		// Then: Should return home page successfully
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "text/html", resp.Header.Get("Content-Type"))
@@ -42,9 +42,12 @@ func TestE2EServer(t *testing.T) {
 	})
 
 	t.Run("should signup new user", func(t *testing.T) {
+		// When: Posting signup request
 		payload := map[string]string{"email": "e2e@example.com", "password": "password123"}
 		body, _ := json.Marshal(payload)
 		resp, err := http.Post(baseURL+"/signup", "application/json", bytes.NewReader(body))
+
+		// Then: Should create user successfully
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusCreated, resp.StatusCode)
 		_ = resp.Body.Close()

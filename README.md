@@ -28,15 +28,10 @@ Run unit tests:
 go test ./...
 ```
 
-Run end-to-end tests:
-```bash
-go test -tags=e2e ./...
-```
-
 Run all tests with coverage:
 ```bash
 go test -cover ./...
-go test -tags=e2e -cover ./...
+go tool cover -html=coverage.out 
 ```
 
 ## API Endpoints
@@ -71,8 +66,7 @@ Error responses:
 - `main.go`: Application entry point
 - `server/`: HTTP server setup
 - `handlers/`: HTTP request handlers
-- `*_e2e_test.go`: End-to-end tests
-- `*_test.go`: Unit tests
+- `*_test.go`: Tests
 
 <!--
 
