@@ -1,4 +1,5 @@
 # Specifications for go-sdd Application
+https://docs.roocode.com/providers/ollama/
 
 ## Project Environment
 - **Go Version**: 1.26.1
