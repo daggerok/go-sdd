@@ -21,7 +21,7 @@ This file contains instructions and best practices for GitHub Copilot to follow 
 - `server/`: Contains HTTP server setup and routing (package `server`).
 - `handlers/`: Contains HTTP request handlers and business logic (package `handlers`).
 - `main_e2e_test.go`: End-to-end tests that run against the running app.
-- `.copilot/guidelines.md`: This file with coding guidelines.
+- `.sdd/guidelines.md`: This file with coding guidelines.
 
 **Important**: Never put handlers and server setup in the same file/package. Keep them separated:
 - Server package: Only routing and server configuration
