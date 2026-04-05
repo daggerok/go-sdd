@@ -29,7 +29,7 @@ func TestHomeHandler(t *testing.T) {
 }
 
 func TestSignupHandler(t *testing.T) {
-	t.Run("should reject non-POST requests", func(t *testing.T) {
+	t.Run("should not accept non-POST requests", func(t *testing.T) {
 		// Given: A GET request to signup endpoint
 		req := httptest.NewRequest("GET", "/signup", nil)
 		w := httptest.NewRecorder()
@@ -41,7 +41,7 @@ func TestSignupHandler(t *testing.T) {
 		assert.Equal(t, http.StatusMethodNotAllowed, w.Code)
 	})
 
-	t.Run("should reject invalid JSON", func(t *testing.T) {
+	t.Run("should not accept invalid JSON", func(t *testing.T) {
 		// Given: A POST request with invalid JSON
 		req := httptest.NewRequest("POST", "/signup", bytes.NewBufferString("invalid json"))
 		req.Header.Set("Content-Type", "application/json")
@@ -59,7 +59,7 @@ func TestSignupHandler(t *testing.T) {
 		assert.Equal(t, "Invalid JSON", resp.Error)
 	})
 
-	t.Run("should reject missing email", func(t *testing.T) {
+	t.Run("should not signup if missing email", func(t *testing.T) {
 		// Given: A POST request with empty email
 		reqBody := handlers.SignupRequest{Email: "", Password: "password123"}
 		bodyBytes, _ := json.Marshal(reqBody)
@@ -79,7 +79,7 @@ func TestSignupHandler(t *testing.T) {
 		assert.Equal(t, "Email and password required", resp.Error)
 	})
 
-	t.Run("should reject missing password", func(t *testing.T) {
+	t.Run("should not signup if missing password", func(t *testing.T) {
 		// Given: A POST request with empty password
 		reqBody := handlers.SignupRequest{Email: "test@example.com", Password: ""}
 		bodyBytes, _ := json.Marshal(reqBody)
@@ -99,7 +99,7 @@ func TestSignupHandler(t *testing.T) {
 		assert.Equal(t, "Email and password required", resp.Error)
 	})
 
-	t.Run("should reject short password", func(t *testing.T) {
+	t.Run("should not signup if password is too short", func(t *testing.T) {
 		// Given: A POST request with short password
 		reqBody := handlers.SignupRequest{Email: "test@example.com", Password: "12345"}
 		bodyBytes, _ := json.Marshal(reqBody)

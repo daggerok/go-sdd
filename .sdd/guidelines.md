@@ -1,6 +1,14 @@
-# Copilot Coding Guidelines
+# AI Agent Coding Guidelines
 
-This file contains instructions and best practices for GitHub Copilot to follow when assisting with this Go project.
+This file contains instructions and best practices for AI Agents to follow when assisting with this Go project.
+
+## Roo Code
+
+Before task start, run ollama model (as an optimization) for at least 1 hour:
+
+```bash
+ollama run glm-4.7-flash:latest --keepalive 1h /bye
+```
 
 ## General Rules
 
