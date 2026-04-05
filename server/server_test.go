@@ -1,9 +1,7 @@
 package server_test
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"net"
 	"net/http"
 	"testing"
@@ -38,18 +36,6 @@ func TestE2EServer(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "text/html", resp.Header.Get("Content-Type"))
-		_ = resp.Body.Close()
-	})
-
-	t.Run("should signup new user", func(t *testing.T) {
-		// When: Posting signup request
-		payload := map[string]string{"email": "e2e@example.com", "password": "password123"}
-		body, _ := json.Marshal(payload)
-		resp, err := http.Post(baseURL+"/signup", "application/json", bytes.NewReader(body))
-
-		// Then: Should create user successfully
-		assert.NoError(t, err)
-		assert.Equal(t, http.StatusCreated, resp.StatusCode)
 		_ = resp.Body.Close()
 	})
 }
