@@ -29,7 +29,7 @@ go test -v -cover ./...
 #go tool cover -html=coverage.out
 ```
 
-## API Endpoints
+## E2e testing
 
 ### Home Page
 ```bash
