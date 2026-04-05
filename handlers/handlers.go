@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -23,4 +24,49 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "<html><body><h1>Welcome</h1>%s</body></html>", authLink)
+}
+
+type SignupRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type SignupResponse struct {
+	Message string `json:"message"`
+	Error   string `json:"error,omitempty"`
+}
+
+func SignupHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var req SignupRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(SignupResponse{Error: "Invalid JSON"})
+		return
+	}
+
+	if req.Email == "" || req.Password == "" {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(SignupResponse{Error: "Email and password required"})
+		return
+	}
+
+	if len(req.Password) < 6 {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(SignupResponse{Error: "Password must be at least 6 characters"})
+		return
+	}
+
+	// In a real application, you would check if email already exists
+	// For now, we'll just return success
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(SignupResponse{Message: "User created"})
 }

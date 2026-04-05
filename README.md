@@ -23,15 +23,10 @@ The application runs on port 8081 and stores users in memory.
 
 ## Testing
 
-Run unit tests:
+Run tests with coverage:
 ```bash
-go test ./...
-```
-
-Run all tests with coverage:
-```bash
-go test -cover ./...
-go tool cover -html=coverage.out 
+go test -v -cover ./...
+#go tool cover -html=coverage.out
 ```
 
 ## API Endpoints
@@ -69,7 +64,6 @@ Error responses:
 - `*_test.go`: Tests
 
 <!--
-
 ```bash
 curl -XPOST http://localhost:8080/api/todos/
   -d '{"user_id": 1, "title": "My first todo", "completed": false}'
