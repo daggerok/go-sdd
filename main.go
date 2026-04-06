@@ -4,13 +4,17 @@ import (
 	"fmt"
 	"net/http"
 
-	"go-sdd/handlers"
+	"github.com/daggerok/go-sdd/server"
 )
 
 func main() {
-	http.HandleFunc("/", handlers.HomeHandler)
-	fmt.Println("Server running on port 8081")
-	if err := http.ListenAndServe(":8081", nil); err != nil {
+	port := 8081
+	srv := server.NewServer(fmt.Sprintf(":%d", port))
+
+	fmt.Println("Server running on port", port)
+	fmt.Printf("Visit http://localhost:%d to see the home page\n", port)
+
+	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		fmt.Println("Server failed to start:", err)
 	}
 }

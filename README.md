@@ -1,14 +1,11 @@
-# Todo Web App
+# go-sdd
 
-A simple web application for managing todos with basic CRUD operations.
+Todo web app by specification driven development with VS Code and Copilot. A simple web application for managing todos with authentication.
 
 ## Features
 
-- **Create Todos**: POST to `/api/todos`
-- **Get All Todos**: GET to `/api/todos`
-- **Get Todo Detail**: GET to `/api/todos/:id`
-- **Update Todo**: PUT to `/api/todos/:id`
-- **Delete Todo**: DELETE to `/api/todos/:id`
+- **Signup**: POST to `/signup` - Create a new user account
+- **Home Page**: GET to `/` - Welcome page with app info
 
 ## Setup
 
@@ -22,32 +19,53 @@ go mod download
 go run main.go
 ```
 
-The application will create a SQLite database file (todos.db) automatically.
+The application runs on port 8081 and stores users in memory.
 
 ## Testing
 
-Run all tests:
+Run tests with coverage:
 ```bash
-./run_tests.sh
+go test -v -cover ./...
+#go tool cover -html=coverage.out
 ```
 
-Or manually:
+## E2e testing
+
+### Home Page
 ```bash
-go test -v
-go test -cover
+curl http://localhost:8081/
 ```
+Returns HTML welcome page.
 
-## API Endpoints
-
-### Get All Todos
+### Signup
 ```bash
-curl http://localhost:8080/api/todos
-```
-
-### Create Todo
-```bash
-curl -X POST http://localhost:8080/api/todos \
+curl -X POST http://localhost:8081/signup \
   -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com", "password": "password123"}'
+```
+
+Success response:
+```json
+{"message": "User created"}
+```
+
+Error responses:
+- Invalid JSON: `{"error": "Invalid JSON"}`
+- Missing fields: `{"error": "Email and password required"}`
+- Short password: `{"error": "Password must be at least 6 characters"}`
+- Email exists: `{"error": "Email already exists"}`
+
+## Project Structure
+
+- `.sdd/`: Specifications and guidelines for development
+- `main.go`: Application entry point
+- `server/`: HTTP server setup
+- `handlers/`: HTTP request handlers
+- `*_test.go`: Tests
+
+<!--
+```bash
+curl -XPOST http://localhost:8080/api/todos/
   -d '{"user_id": 1, "title": "My first todo", "completed": false}'
 ```
 
@@ -67,6 +85,8 @@ curl -X PUT http://localhost:8080/api/todos/1 \
 ```bash
 curl -X DELETE http://localhost:8080/api/todos/1
 ```
+
+-->
 
 ## Future Features
 
